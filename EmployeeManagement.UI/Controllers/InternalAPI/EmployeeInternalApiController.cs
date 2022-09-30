@@ -21,6 +21,21 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
         }
 
         [HttpGet]
+        [Route("employees")]
+        public IActionResult GetEmployees()
+        {
+            try
+            {
+                var employee = _employeeApiClient.GetAllEmployee();
+                return Ok(employee);
+            }
+
+            catch (Exception exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
+            }
+        }
+        [HttpGet]
         [Route("{employeeId}")]
         public IActionResult GetEmployeeById([FromRoute] int employeeId)
         {
@@ -30,7 +45,7 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
 
                 return Ok(employee);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;

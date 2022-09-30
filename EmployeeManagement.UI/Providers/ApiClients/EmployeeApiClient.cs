@@ -1,5 +1,7 @@
-﻿using EmployeeManagement.UI.Models.Provider;
+﻿using EmployeeManagement.UI.Models;
+using EmployeeManagement.UI.Models.Provider;
 using EmployeeManagement.UI.Providers.Contracts;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 
@@ -14,16 +16,25 @@ namespace EmployeeManagement.UI.Providers.ApiClients
             _httpClient = httpClient;
         }
 
-        public IEnumerable<EmployeeData> GetAllEmployee()
+        public IEnumerable<EmployeeViewModel> GetAllEmployee()
         {
-            //Consume /employee endpoint in the EmployeeManagementApi using _httpClient
-            return null;
+            using var response = _httpClient.GetAsync("https://localhost:5001/api/employee/getall").Result;
+            var employee = JsonConvert.DeserializeObject<IEnumerable<EmployeeViewModel>>
+                           (response.Content.ReadAsStringAsync().Result);
+            return employee;
+
         }
 
-        public EmployeeData GetEmployeeById(int id)
+        public EmployeeDetailedViewModel GetEmployeeById(int Id)
         {
-            //Consume /{employeeId} endpoint in the EmployeeManagementApi using _httpClient
-            return null;
+           
+            using var response = _httpClient.GetAsync("https://localhost:5001/api/employee/" + Id).Result;
+            var employee = JsonConvert.DeserializeObject<EmployeeDetailedViewModel>
+                           (response.Content.ReadAsStringAsync().Result);
+            return employee;
+
+
+
         }
     }
 }

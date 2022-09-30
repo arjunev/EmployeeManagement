@@ -101,7 +101,7 @@ namespace EmployeeManagement.DataAccess.Repository
             }
         }
 
-        public EmployeeData InsertEmployee(EmployeeData employee)
+        public bool InsertEmployee(EmployeeData employee)
         {
             try
             {
@@ -115,7 +115,7 @@ namespace EmployeeManagement.DataAccess.Repository
 
                 sqlCommand.ExecuteNonQuery();
 
-                return employee;
+                return true;
 
             }
             catch (Exception)
@@ -129,7 +129,7 @@ namespace EmployeeManagement.DataAccess.Repository
             }
         }
 
-        public EmployeeData UpdateEmployee(EmployeeData employee)
+        public bool UpdateEmployee(EmployeeData employee)
         {
             try
             {
@@ -144,7 +144,7 @@ namespace EmployeeManagement.DataAccess.Repository
 
                 sqlCommand.ExecuteNonQuery();
 
-                return employee;
+                return true;
             }
             catch (Exception)
             {

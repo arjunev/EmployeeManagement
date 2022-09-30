@@ -24,12 +24,10 @@ namespace EmployeeManagement.UI.Controllers
             {
                 var employees = _employeeApiClient.GetAllEmployee();
 
-                //Dummy Data Need to Replace with employees object
-                var employeeViewModels = new List<EmployeeViewModel>()
-                {
+/*                //Dummy Data Need to Replace with employees object
+                var employeeViewModels = new List<EmployeeViewModel>()*/
 
-                };
-                return View(employeeViewModels);
+                return View(employees);
             }
             catch (Exception)
             {

@@ -23,6 +23,21 @@ namespace EmployeeManagement.Application.Services
             var employee = MapToEmployeesDto(getEmployees);
             return employee;
         }
+        private IEnumerable<EmployeeDto> MapToEmployeesDto(IEnumerable<EmployeeData> employeeData)
+        {
+            var employeeDtos = new List<EmployeeDto>();
+            foreach (var employee in employeeData)
+            {
+                var employeeDto = new EmployeeDto()
+                {
+                    Id = employee.Id,
+                    Name = employee.Name,
+                    Department = employee.Department
+                };
+                employeeDtos.Add(employeeDto);
+            }
+            return employeeDtos;
+        }
 
         public EmployeeDto GetEmployeeById(int Id)
         {
@@ -30,21 +45,26 @@ namespace EmployeeManagement.Application.Services
             return (MapToEmployeeDto(getEmployeesById));
         }
 
-        public EmployeeDto InsertEmployee(EmployeeDto employee)
+        private EmployeeDto MapToEmployeeDto(EmployeeData employee)
+        {
+            var employeeDto = new EmployeeDto()
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Department = employee.Department,
+                Age = employee.Age,
+                Address = employee.Address
+            };
+            return employeeDto;
+        }
+
+        public bool InsertEmployee(EmployeeDto employee)
         {
             try
             {
-                var employeeData = new EmployeeData()
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                    Department = employee.Department,
-                    Age = employee.Age,
-                    Address = employee.Address
-                };
-                var insertEmployee = _employeeRepository.InsertEmployee(employeeData);
-                var empployeeInsert = (MapToEmployeeInsert(insertEmployee));
-                return empployeeInsert;
+
+                var insertEmployee = _employeeRepository.InsertEmployee(MapToEmployeeInsert(employee));
+                return insertEmployee;
             }
             catch (Exception)
             {
@@ -52,27 +72,45 @@ namespace EmployeeManagement.Application.Services
             }
 
         }
-        public EmployeeDto UpdateEmployee(EmployeeData employee)
+
+        private EmployeeData MapToEmployeeInsert(EmployeeDto insertEmployee)
+        {
+            var insertDto = new EmployeeData()
+            {
+                Id = insertEmployee.Id,
+                Name = insertEmployee.Name,
+                Department = insertEmployee.Department,
+                Age = insertEmployee.Age,
+                Address = insertEmployee.Address
+            };
+            return insertDto;
+        }
+
+        public bool UpdateEmployee(EmployeeDto employee)
         {
             try
             {
-                /*var employeeData = new EmployeeData()
-                {
-                    Id = employee.Id,
-                    Name = employee.Name,
-                    Department = employee.Department,
-                    Age = employee.Age,
-                    Address = employee.Address
-                };*/
-                var updateEmployee = _employeeRepository.UpdateEmployee(employee);
-                var empployeeUpdate = (MapToEmployeeUpdate(updateEmployee));
-                return empployeeUpdate;
+
+                var updateEmployee = _employeeRepository.UpdateEmployee(MapToEmployeeUpdate(employee));
+                return updateEmployee;
             }
             catch(Exception)
             {
                 throw;
             }
 
+        }
+        private EmployeeData MapToEmployeeUpdate(EmployeeDto updateEmployee)
+        {
+            var employeeDto = new EmployeeData()
+            {
+                Id = updateEmployee.Id,
+                Name = updateEmployee.Name,
+                Department = updateEmployee.Department,
+                Age = updateEmployee.Age,
+                Address = updateEmployee.Address
+            };
+            return employeeDto;
         }
         public bool DeleteEmployee(int Id)
          {
@@ -87,69 +125,6 @@ namespace EmployeeManagement.Application.Services
             }
 
          }
-        private IEnumerable<EmployeeDto> MapToEmployeesDto(IEnumerable<EmployeeData> employeeData)
-        {
-            var employeeDtos = new List<EmployeeDto>();
-            foreach (var employee in employeeData)
-            {
-                var employeeDto = new EmployeeDto()
-                {
-                    Id=employee.Id,
-                    Name=employee.Name,
-                    Department=employee.Department
-                };
-                employeeDtos.Add(employeeDto);
-            }
-            return employeeDtos;
-        }
 
-        private EmployeeDto MapToEmployeeDto(EmployeeData employee)
-        {
-            var employeeDto = new EmployeeDto()
-            {
-                Id =employee.Id,
-                Name=employee.Name,
-                Department=employee.Department,
-                Age=employee.Age,
-                Address=employee.Address
-            };
-            return employeeDto;
-        }
-        private EmployeeDto MapToEmployeeInsert(EmployeeData employee)
-        {
-            var employeeDto = new EmployeeDto()
-            {
-                Id = employee.Id,
-                Name = employee.Name,
-                Department = employee.Department,
-                Age = employee.Age,
-                Address = employee.Address
-            };
-            return employeeDto;
-        }
-        private EmployeeDto MapToEmployeeUpdate(EmployeeData employee)
-        {
-            var employeeDto = new EmployeeDto()
-            {
-                Id = employee.Id,
-                Name = employee.Name,
-                Department = employee.Department,
-                Age = employee.Age,
-                Address = employee.Address
-            };
-            return employeeDto;
-        }
-        /*private EmployeeDto MapToEmployeeDelete(int id)
-        {
-            var employeeDto = new EmployeeDto()
-            {
-                Id = employee.Id,
-                Name = employee.Name,
-                Department = employee.Department,
-                Age = employee.Age,
-                Address = employee.Address
-            };
-            return employeeDto;*/
-        
     }
 }

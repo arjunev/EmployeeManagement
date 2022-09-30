@@ -54,39 +54,87 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
+        private EmployeeDetailedViewModel MapToEmployeeById(EmployeeDto employee)
+        {
+            var employeeDetail = new EmployeeDetailedViewModel();
+            {
+                employeeDetail.Id = employee.Id;
+                employeeDetail.Name = employee.Name;
+                employeeDetail.Department = employee.Department;
+                employeeDetail.Age = employee.Age;
+                employeeDetail.Address = employee.Address;
+            }
+            return employeeDetail;
+        }
         //Create Employee Insert, Update and Delete Endpoint here
         [HttpPost]
         [Route("insert")]
-        public IActionResult InsertEmployee([FromBody] EmployeeDto employee)
+        public IActionResult InsertEmployee([FromBody] EmployeeDetailedViewModel employee)
         {
             try
             {
-                var insertEmployee = _employeeService.InsertEmployee(employee);
-                var employeeInsert = ( MapToEmployeeInsert(insertEmployee));
-                return Ok(employeeInsert);
+                var insertEmployee = _employeeService.InsertEmployee(MapToEmployeeInsert(employee));
+                if (insertEmployee)
+                {
+                    return Ok(insertEmployee);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError);
+                }
             }
             catch (Exception exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
+        }
+
+        private EmployeeDto MapToEmployeeInsert(EmployeeDetailedViewModel employee)
+        {
+            var employeeDto = new EmployeeDto()
+            {
+                Id = employee.Id,
+                Name = employee.Name,
+                Department = employee.Department,
+                Age = employee.Age,
+                Address = employee.Address
+            };
+            return employeeDto;
         }
 
         [HttpPut]
         [Route("update")]
-        public IActionResult UpdateEmployee([FromBody] EmployeeData employee)
+        public IActionResult UpdateEmployee([FromBody] EmployeeDetailedViewModel employee)
         {
             try
             {
-                var employeeUpdate = _employeeService.UpdateEmployee(employee);
-                
-                return Ok(MapToEmployeeUpdate(employeeUpdate));
+                var updateEmployee = _employeeService.UpdateEmployee(MapToEmployeeUpdate(employee));
+                if (updateEmployee)
+                {
+                    return Ok(updateEmployee);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Failed to update employee details");
+                }
             }
             catch (Exception exception)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-
+        private EmployeeDto MapToEmployeeUpdate(EmployeeDetailedViewModel employee)
+        {
+            var employeeDetail = new EmployeeDto();
+            {
+                employeeDetail.Id = employee.Id;
+                employeeDetail.Name = employee.Name;
+                employeeDetail.Department = employee.Department;
+                employeeDetail.Age = employee.Age;
+                employeeDetail.Address = employee.Address;
+            }
+            return employeeDetail;
+        }
         [HttpDelete]
         [Route("{id}")]
         public IActionResult DeleteEmployee([FromRoute] int id)
@@ -101,54 +149,6 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-        
-        private EmployeeDetailedViewModel MapToEmployeeById(EmployeeDto employee)
-        {
-            var employeeDetail = new EmployeeDetailedViewModel();
-            {
-                employeeDetail.Id = employee.Id;
-                employeeDetail.Name = employee.Name;
-                employeeDetail.Department = employee.Department;
-                employeeDetail.Age = employee.Age;
-                employeeDetail.Address = employee.Address;
-            }
-            return employeeDetail;
-        }
-        private EmployeeDetailedViewModel MapToEmployeeInsert(EmployeeDto employee)
-        {
-            var employeeDetail = new EmployeeDetailedViewModel();
-            {
-                employeeDetail.Id = employee.Id;
-                employeeDetail.Name = employee.Name;
-                employeeDetail.Department = employee.Department;
-                employeeDetail.Age = employee.Age;
-                employeeDetail.Address = employee.Address;
-            }
-            return employeeDetail;
-        }
-        private EmployeeDetailedViewModel MapToEmployeeUpdate(EmployeeDto employee)
-        {
-            var employeeDetail = new EmployeeDetailedViewModel();
-            {
-                employeeDetail.Id = employee.Id;
-                employeeDetail.Name = employee.Name;
-                employeeDetail.Department = employee.Department;
-                employeeDetail.Age = employee.Age;
-                employeeDetail.Address = employee.Address;
-            }
-            return employeeDetail;
-        }
-       /* private EmployeeDetailedViewModel MapToEmployeeDelete(EmployeeDto employee)
-        {
-            var employeeDetail = new EmployeeDetailedViewModel();
-            {
-                employeeDetail.Id = employee.Id;
-                employeeDetail.Name = employee.Name;
-                employeeDetail.Department = employee.Department;
-                employeeDetail.Age = employee.Age;
-                employeeDetail.Address = employee.Address;
-            }
-            return employeeDetail;*/
         
     }
 }
