@@ -136,12 +136,12 @@ namespace EmployeeManagement.API.Controllers
             return employeeDetail;
         }
         [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteEmployee([FromRoute] int id)
+        [Route("{Id}")]
+        public IActionResult DeleteEmployee([FromRoute] int Id)
         {
             try
             {
-                var deleteEmployee = _employeeService.DeleteEmployee(id);
+                var deleteEmployee = _employeeService.DeleteEmployee(Id);
                 return Ok(deleteEmployee);
             }
             catch (Exception exception)

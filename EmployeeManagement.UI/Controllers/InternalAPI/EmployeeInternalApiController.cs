@@ -52,5 +52,22 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
             }
 
         }
+        [HttpDelete]
+        [Route("{Id}")]
+        public IActionResult DeleteEmployee([FromRoute] int Id)
+        {
+            try
+            {
+                var employee = _employeeApiClient.DeleteEmployee(Id);
+
+                return Ok(employee);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
     }
 }

@@ -35,5 +35,42 @@ namespace EmployeeManagement.UI.Controllers
                 throw;
             }
         }
+        public IActionResult GetElementById(int Id)
+        {
+            try
+            {
+                var employees = _employeeApiClient.GetEmployeeById(Id);
+                return View(employees);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+        }
+
+        public IActionResult InsertEmployee(EmployeeDetailedViewModel employee)
+        {
+            try
+            {
+                var employees = _employeeApiClient.InsertEmployee(employee);
+                return View(employees);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+        public IActionResult DeleteEmployee(int Id)
+        {
+            try
+            {
+                var employees = _employeeApiClient.DeleteEmployee(Id);
+                return View(employees);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
     }
 }
