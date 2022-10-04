@@ -9,6 +9,7 @@ namespace EmployeeManagement.UI.Providers.Contracts
         IEnumerable<EmployeeViewModel> GetAllEmployee();
         EmployeeDetailedViewModel GetEmployeeById(int Id);
         bool InsertEmployee(EmployeeDetailedViewModel employee);
+        bool UpdateEmployee(EmployeeDetailedViewModel employee);
         bool DeleteEmployee(int Id);
     }
 }

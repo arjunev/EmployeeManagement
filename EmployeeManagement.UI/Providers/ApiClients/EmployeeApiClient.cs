@@ -4,6 +4,7 @@ using EmployeeManagement.UI.Providers.Contracts;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 
 namespace EmployeeManagement.UI.Providers.ApiClients
 {
@@ -33,38 +34,33 @@ namespace EmployeeManagement.UI.Providers.ApiClients
                            (response.Content.ReadAsStringAsync().Result);
             return employee;
         }
-/*        public EmployeeDetailedViewModel InsertEmployee(EmployeeDetailedViewModel employee)
-        {
 
-            using var response = _httpClient.PostAsync("https://localhost:5001/api/employee/insert" ).Result;
-            var employee = JsonConvert.DeserializeObject<EmployeeDetailedViewModel>
-                           (response.Content.ReadAsStringAsync().Result);
-            return employee;
-        }*/
         public bool InsertEmployee(EmployeeDetailedViewModel employee)
         {
-            //Consume /{employeeId} endpoint in the EmployeeManagementApi using _httpClient
-            var stringContent = new StringContent(JsonConvert.SerializeObject(employee));
+            var stringContent = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
             using (var response = _httpClient.PostAsync("https://localhost:5001/api/employee/insert", stringContent).Result)
             {
+                response.Content.ReadAsStringAsync();
                 return true;
             };
         }
 
-/*        public bool InsertEmployee(EmployeeDetailedViewModel employee)
+        public bool UpdateEmployee(EmployeeDetailedViewModel employee)
         {
-            //Consume /{employeeId} endpoint in the EmployeeManagementApi using _httpClient
-            var stringContent = new StringContent(JsonConvert.SerializeObject(employee));
-            using (var response = _httpClient.PostAsync("https://localhost:5001/api/employee/insert", stringContent).Result)
+            var stringContent = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
+            using (var response = _httpClient.PutAsync("https://localhost:5001/api/employee/update", stringContent).Result)
             {
+                response.Content.ReadAsStringAsync();
                 return true;
-            }
-        }*/
+            };
+        }
+
         public bool DeleteEmployee(int Id)
         {
             new StringContent(JsonConvert.SerializeObject(Id));
             using (var response = _httpClient.DeleteAsync("https://localhost:5001/api/employee/" + Id ).Result)
             {
+                response.Content.ReadAsStringAsync();
                 return true;
             };
         }
