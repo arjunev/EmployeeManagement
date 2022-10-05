@@ -96,7 +96,7 @@ namespace EmployeeManagement.Application.Services
             }
             catch(Exception)
             {
-                throw;
+                 throw;
             }
 
         }
