@@ -7,11 +7,6 @@ using System.Linq;
 
 namespace EmployeeManagement.DataAccess.Repository
 {
-    /// <summary>
-    /// Connect To Database and Perforum CRUD operations
-    /// </summary>
-
-
     public class EmployeeRepository : IEmployeeRepository
     {
         private SqlConnection _sqlConnection;
@@ -19,7 +14,6 @@ namespace EmployeeManagement.DataAccess.Repository
         public EmployeeRepository(string connectionstring)
         {
             _sqlConnection = new SqlConnection(connectionstring);
-
         }
         public EmployeeRepository()
         {
@@ -29,18 +23,12 @@ namespace EmployeeManagement.DataAccess.Repository
 
             public IEnumerable<EmployeeData> GetEmployees()
             {
-                //Take data from Table
-
                 try
                 {
                     _sqlConnection.Open();
-
                     var sqlCommand = new SqlCommand(cmdText: "select Id,Name,Department from Employee", _sqlConnection);
-
                     var sqlDataReader = sqlCommand.ExecuteReader();
-
                     var listOfemployee = new List<EmployeeData>();
-
                     while (sqlDataReader.Read())
                     {
                         listOfemployee.Add(new EmployeeData()
@@ -49,7 +37,6 @@ namespace EmployeeManagement.DataAccess.Repository
                             Name = (string)sqlDataReader["Name"],
                             Department = (string)sqlDataReader["Department"]
                         });
-
                     }
                     return listOfemployee;
                 }
@@ -61,24 +48,18 @@ namespace EmployeeManagement.DataAccess.Repository
                 {
                     _sqlConnection.Close();
                 }
-
             }
         public EmployeeData GetEmployeeById(int Id) 
         {
             try
             {
                 _sqlConnection.Open();
-
                 var sqlcommand = new SqlCommand(cmdText: "Select * From Employee where Id =@Id", _sqlConnection);
                 sqlcommand.Parameters.AddWithValue("Id",Id);
-
                 var sqlDataReader = sqlcommand.ExecuteReader();
-
                 var employee = new EmployeeData();
-
                 while (sqlDataReader.Read())
                 {
-
                     {
                         employee.Id = (int)sqlDataReader["Id"];
                         employee.Name = (string)sqlDataReader["Name"];
@@ -86,13 +67,11 @@ namespace EmployeeManagement.DataAccess.Repository
                         employee.Age = (int)sqlDataReader["Age"];
                         employee.Address = (string)sqlDataReader["Address"];
                     }
-
                 }
                 return employee;
             }
             catch (Exception)
             {
-
                 throw;
             }
             finally
@@ -106,17 +85,13 @@ namespace EmployeeManagement.DataAccess.Repository
             try
             {
                 _sqlConnection.Open();
-
                 var sqlCommand = new SqlCommand(cmdText: "Insert Into Employee (Name,Department,Age,Address) Values (@Name,@Department,@Age,@Address)", _sqlConnection);
                 sqlCommand.Parameters.AddWithValue("Name", employee.Name);
                 sqlCommand.Parameters.AddWithValue("Department", employee.Department);
                 sqlCommand.Parameters.AddWithValue("Age", employee.Age);
                 sqlCommand.Parameters.AddWithValue("Address", employee.Address);
-
                 sqlCommand.ExecuteNonQuery();
-
                 return true;
-
             }
             catch (Exception)
             {
@@ -140,10 +115,7 @@ namespace EmployeeManagement.DataAccess.Repository
                 sqlCommand.Parameters.AddWithValue("Department", employee.Department);
                 sqlCommand.Parameters.AddWithValue("Age", employee.Age);
                 sqlCommand.Parameters.AddWithValue("Address", employee.Address);
-
-
                 sqlCommand.ExecuteNonQuery();
-
                 return true;
             }
             catch (Exception)

@@ -11,12 +11,10 @@ namespace EmployeeManagement.UI.Providers.ApiClients
     public class EmployeeApiClient : IEmployeeApiClient
     {
         private readonly HttpClient _httpClient;
-
         public EmployeeApiClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
-
         public IEnumerable<EmployeeViewModel> GetAllEmployee()
         {
             using var response = _httpClient.GetAsync("https://localhost:5001/api/employee/getall").Result;
@@ -25,7 +23,6 @@ namespace EmployeeManagement.UI.Providers.ApiClients
             return employee;
 
         }
-
         public EmployeeDetailedViewModel GetEmployeeById(int Id)
         {
            
@@ -34,7 +31,6 @@ namespace EmployeeManagement.UI.Providers.ApiClients
                            (response.Content.ReadAsStringAsync().Result);
             return employee;
         }
-
         public bool InsertEmployee(EmployeeDetailedViewModel employee)
         {
             var stringContent = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
@@ -44,7 +40,6 @@ namespace EmployeeManagement.UI.Providers.ApiClients
                 return true;
             };
         }
-
         public bool UpdateEmployee(EmployeeDetailedViewModel employee)
         {
             var stringContent = new StringContent(JsonConvert.SerializeObject(employee), Encoding.UTF8, "application/json");
@@ -54,7 +49,6 @@ namespace EmployeeManagement.UI.Providers.ApiClients
                 return true;
             };
         }
-
         public bool DeleteEmployee(int Id)
         {
             new StringContent(JsonConvert.SerializeObject(Id));

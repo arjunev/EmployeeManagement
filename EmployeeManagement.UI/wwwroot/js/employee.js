@@ -20,11 +20,11 @@ function bindEvents()
                                          <b>Age:</b><p>${result.age}</p>
                                          <b>Address:</b><p>${result.address}</p>
                                         </div>`
-
-                $("#EmployeeCard").html(newEmployeeCard);
-                showEmployeeDetailCard();
-            },
-            error: function (error) {
+                                        $("#EmployeeCard").html(newEmployeeCard);
+                                        showEmployeeDetailCard();
+                 },
+            error: function (error)
+            {
                 console.log(error);
             }
         });
@@ -52,30 +52,6 @@ function bindEvents()
             },
         });
     });
-
-/*    $("#updateform").submit(function (event) {
-        console.log("clicked");
-        var employee = {};
-        employee.Id = Number($("#empId").val());
-        employee.Name = $("#empName").val();
-        employee.Department = $("#empDept").val();
-        employee.Age = Number($("#empAge").val());
-        employee.Address = $("#empAddress").val();
-        var data = JSON.stringify(employee);
-        $.ajax({
-            url: 'https://localhost:44383/api/internal/employee/update',
-            type: 'PUT',
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            data: data,
-            success: function (result) {
-                location.reload(true);
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
-    });*/
 
     $(".employeeEdit").on("click", function (event) {
         console.log("clicked");
@@ -130,10 +106,8 @@ function bindEvents()
     });
 
     $(".employeeDelete").on("click", function (event)
-
     {
         var employeeId = event.currentTarget.getAttribute("data-id");
-
         var result = confirm("OK or cancel?");
         if (result)
         {
@@ -156,8 +130,6 @@ function bindEvents()
         {
            alert("Deletion Canceled");
         }
-
-
     });
 }
  

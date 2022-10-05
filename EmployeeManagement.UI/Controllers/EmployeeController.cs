@@ -12,12 +12,10 @@ namespace EmployeeManagement.UI.Controllers
     public class EmployeeController : Controller
     {
         private readonly IEmployeeApiClient _employeeApiClient;
-
         public EmployeeController(IEmployeeApiClient employeeApiClient)
         {
             this._employeeApiClient = employeeApiClient;
         }
-
         public IActionResult Index()
         {
             try
@@ -27,10 +25,8 @@ namespace EmployeeManagement.UI.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
-
     }
 }

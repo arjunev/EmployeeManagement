@@ -15,22 +15,17 @@ namespace EmployeeManagement.API.Controllers
     public class EmployeeApiController : ControllerBase
     {
         private readonly IEmployeeService _employeeService;
-
         public EmployeeApiController(IEmployeeService employeeService)
         {
             this._employeeService = employeeService;
         }
-
         [HttpGet]
         [Route("getall")]
         public IActionResult GetEmployees()
         {
-            /// get employees by calling GetEmployees() in IEmployeeService and store it in a variable and Map that variable to EmployeeDetailedViewModel. 
-            /// 
             try
             {
                var getEmployee = _employeeService.GetEmployees();
-               // var employeeGet = (MapToGetEmployee(getEmployee));
                 return Ok(getEmployee);
             }
             catch (Exception exception)
@@ -38,7 +33,6 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-
         [HttpGet]
         [Route("{Id}")]
         public IActionResult GetEmployeeById([FromRoute] int Id)
@@ -66,7 +60,6 @@ namespace EmployeeManagement.API.Controllers
             }
             return employeeDetail;
         }
-        //Create Employee Insert, Update and Delete Endpoint here
         [HttpPost]
         [Route("insert")]
         public IActionResult InsertEmployee([FromBody] EmployeeDetailedViewModel employee)
@@ -88,7 +81,6 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-
         private EmployeeDto MapToEmployeeInsert(EmployeeDetailedViewModel employee)
         {
             var employeeDto = new EmployeeDto()
@@ -101,7 +93,6 @@ namespace EmployeeManagement.API.Controllers
             };
             return employeeDto;
         }
-
         [HttpPut]
         [Route("update")]
         public IActionResult UpdateEmployee([FromBody] EmployeeDetailedViewModel employee)
@@ -123,7 +114,7 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-        private EmployeeDto MapToEmployeeUpdate(EmployeeDetailedViewModel employee)
+       private EmployeeDto MapToEmployeeUpdate(EmployeeDetailedViewModel employee)
         {
             var employeeDetail = new EmployeeDto();
             {
@@ -149,6 +140,5 @@ namespace EmployeeManagement.API.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, exception.Message);
             }
         }
-        
     }
 }

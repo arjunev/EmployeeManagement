@@ -14,12 +14,10 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
     public class EmployeeInternalApiController : ControllerBase
     {
         private readonly IEmployeeApiClient _employeeApiClient;
-
         public EmployeeInternalApiController(IEmployeeApiClient employeeApiClient)
         {
             _employeeApiClient = employeeApiClient;
         }
-
         [HttpGet]
         [Route("employees")]
         public IActionResult GetEmployees()
@@ -42,15 +40,12 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
             try
             {
                 var employee = _employeeApiClient.GetEmployeeById(employeeId);
-
                 return Ok(employee);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
         [HttpPost]
         [Route("insert")]
@@ -59,15 +54,12 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
             try
             {
                 var employees = _employeeApiClient.InsertEmployee(employee);
-
                 return Ok(employees);
             }
             catch (Exception )
             {
-
                 throw;
             }
-
         }
         [HttpPut]
         [Route("update")]
@@ -76,17 +68,13 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
             try
             {
                 var employees = _employeeApiClient.UpdateEmployee(employee);
-
                 return Ok(employees);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
-
         [HttpDelete]
         [Route("{Id}")]
         public IActionResult DeleteEmployee([FromRoute] int Id)
@@ -94,15 +82,12 @@ namespace EmployeeManagement.UI.Controllers.InternalAPI
             try
             {
                 var employee = _employeeApiClient.DeleteEmployee(Id);
-
                 return Ok(employee);
             }
             catch (Exception)
             {
-
                 throw;
             }
-
         }
     }
 }
