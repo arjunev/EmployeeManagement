@@ -1,103 +1,102 @@
 ﻿@model IEnumerable<EmployeeViewModel>
-
-<h3 class="display-4">Employees</h3>
-<button class="btn btn-success" data-toggle="modal" data-target="#Insert"> Create New Employee</button>
-<div class="modal fade" id="Insert" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Employee Details</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h3 class="display-4">Employees</h3>
+        <button class="btn btn-success" data-toggle="modal" data-target="#Insert"> Create New Employee</button>
+            <div class="modal fade" id="Insert" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Employee Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="createform">
+                                <label>Name:</label><br>
+                                <input type="text" style="width:100%" required id="name" name="name" placeholder="Enter The Name" pattern="[A-Za-z\s\.]{1,15}"><br>
+                                <label for="Department"></label>
+                                <select style="width:100%" required name="Department" id="dept">
+                                    <option value="">Choose Any Option</option>
+                                    <option value="CEO">CEO</option>
+                                    <option value="HR">HR</option>
+                                    <option value="DEVELOPMENT">DEVELOPMENT</option>
+                                    <option value="TESTING">TESTING</option>
+                                    <option value="ACCOUNTING">ACCOUNTING</option>
+                                </select>
+                                <label>Age:</label><br>
+                                <input type="number" style="width:100%" required id="age" name="age" placeholder="Enter The Age" min="20" max="55"><br>
+                                <label>Address:</label><br>
+                                <input type="text" style="width:100%" required id="address" name="address" placeholder="Enter The Address" maxlength="45"><br><br><br>
+                                <input type="submit" value="create" class="btn btn-success">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body">
-                <form id="createform">
-                    <label>Name:</label><br>
-                    <input type="text" style="width:100%" id="name" name="name" placeholder="Enter The Name"><br>
-                    <label for="Department">Choose a Department:</label>
-                    <select style="width:100%" name="Department" id="dept">
-                        <option value="CEO">CEO</option>
-                        <option value="HR">HR</option>
-                        <option value="DEVELOPMENT">DEVELOPMENT</option>
-                        <option value="TESTING">TESTING</option>
-                        <option value="ACCOUNTING">ACCOUNTING</option>
-                    </select>
-                    <label>Age:</label><br>
-                    <input type="number" style="width:100%" id="age" name="age" placeholder="Enter The Age"><br>
-                    <label>Address:</label><br>
-                    <input type="text" style="width:100%" id="address" name="address" placeholder="Enter The Address"><br><br><br>
-                    <input type="submit" value="create">
-                </form>
+            <div class="modal fade" id="Update" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Employee Details</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="updateform">
+                                <label>Id:</label><br>
+                                <input type="number" style="width:100%" required id="empId" disabled><br>
+                                <label>Name:</label><br>
+                                <input type="text" style="width:100%" required id="empName" name="name" pattern="[A-Za-z\s\.]{1,15}"><br>
+                                <label>Department:</label><br>
+                                <select style="width:100%" required name="Department" id="empDept">
+                                    <option value="">Choose Any Option</option>
+                                    <option value="CEO">CEO</option>
+                                    <option value="HR">HR</option>
+                                    <option value="DEVELOPMENT">DEVELOPMENT</option>
+                                    <option value="TESTING">TESTING</option>
+                                    <option value="ACCOUNTING">ACCOUNTING</option>
+                                </select>
+                                <label>Age:</label><br>
+                                <input type="number" required style="width:100%" id="empAge" name="age" min="20" max="55"><br>
+                                <label>Address:</label><br>
+                                <input type="text" required style="width:100%" id="empAddress" name="address" maxlength="45"><br><br><br>
+                                <input type="submit" value="update" class="btn btn-success">
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="Update" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Employee Details</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>
+                            <b>Id</b>
+                        </td>
+                        <td>
+                            <b>Name</b>
+                        </td>
+                        <td>
+                            <b>Department</b>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                 </thead>
+                @foreach (var employee in Model)
+                {
+                 <tr>
+                    <td>@employee.Id</td>
+                    <td>@employee.Name</td>
+                    <td>@employee.Department</td>
+                    <td>
+                        <button class="btn btn-primary employeeDetails" data-id="@employee.Id"> Details</button>
+                        <button class="btn btn-info employeeEdit" data-id="@employee.Id" data-toggle="modal" data-target="#Update"> Edit</button>
+                        <button class="btn btn-danger employeeDelete" data-id="@employee.Id"> Delete</button>
+                    </td>
+                 </tr>}
+            </table>
+
+            <div id="EmployeeCard">
+
             </div>
-            <div class="modal-body">
-                <form id="updateform">
-                    <label>Id:</label><br>
-                    <input type="number" style="width:100%" id="empId" name="id"><br>
-                    <label>Name:</label><br>
-                    <input type="text" style="width:100%" id="empName" name="name"><br>
-                    <label>Department:</label><br>
-                    <select style="width:100%" name="Department" id="empDept">
-                        <option value="CEO">CEO</option>
-                        <option value="HR">HR</option>
-                        <option value="DEVELOPMENT">DEVELOPMENT</option>
-                        <option value="TESTING">TESTING</option>
-                        <option value="ACCOUNTING">ACCOUNTING</option>
-                    </select>
-                    <label>Age:</label><br>
-                    <input type="number" style="width:100%" id="empAge" name="age"><br>
-                    <label>Address:</label><br>
-                    <input type="text" style="width:100%" id="empAddress" name="address"><br><br><br>
-                    <input type="submit" value="update">
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <td>
-                <b>Id</b>
-            </td>
-            <td>
-                <b>Name</b>
-            </td>
-            <td>
-                <b>Department</b>
-            </td>
-            <td>
-            </td>
-        </tr>
 
-    </thead>
-    @foreach (var employee in Model)
-    {
-        <tr>
-            <td>@employee.Id</td>
-            <td>@employee.Name</td>
-            <td>@employee.Department</td>
-            <td>
-                <button class="btn btn-primary employeeDetails" data-id="@employee.Id"> Details</button>
-                <button class="btn btn-info employeeEdit" data-id="@employee.Id"@*id="updateform" *@ data-toggle="modal" data-target="#Update"> Edit</button>
-                <button class="btn btn-danger employeeDelete" data-id="@employee.Id"> Delete</button>
-            </td>
-        </tr>
-    }
-</table>
-
-<div id="EmployeeCard">
-    
-</div>
-
-@section Scripts{
-    <script src="~/js/employee.js"></script>
-}
+            @section Scripts{
+                <script src="~/js/employee.js"></script>
+            }
